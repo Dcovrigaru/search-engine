@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Web Search Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content h2 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .content code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .formula {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            text-align: center;
+        }
+
+        .back-link {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .back-link a {
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .back-link a:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>About This Search Engine</h1>
+        </div>
+
+        <div class="content">
+            <h2>Overview</h2>
+            <p>
+                This is a custom-built web search engine that implements both content-based and link-based
+                ranking algorithms. The system crawls web pages, builds an inverted index, and ranks results
+                using a combination of Vector Space Model (cosine similarity) and PageRank.
+            </p>
+
+            <h2>Architecture</h2>
+
+            <h3>1. Web Crawler</h3>
+            <p>
+                A polite web crawler that respects robots.txt and implements delays between requests.
+                The crawler:
+            </p>
+            <ul>
+                <li>Starts from a set of seed URLs</li>
+                <li>Follows links to discover new pages</li>
+                <li>Checks robots.txt before accessing each domain</li>
+                <li>Implements configurable delays (politeness policy)</li>
+                <li>Extracts both content and link structure</li>
+                <li>Stores pages and link graph for offline processing</li>
+            </ul>
+
+            <h3>2. Indexer</h3>
+            <p>
+                Processes crawled HTML pages to build an inverted index:
+            </p>
+            <ul>
+                <li>Parses HTML to extract text content</li>
+                <li>Tokenizes and normalizes text (lowercase, remove stopwords)</li>
+                <li>Builds inverted index: term → {doc_id: frequency}</li>
+                <li>Calculates TF-IDF weights</li>
+                <li>Computes document lengths for normalization</li>
+            </ul>
+
+            <h3>3. PageRank Algorithm</h3>
+            <p>
+                Computes importance scores based on link structure:
+            </p>
+            <ul>
+                <li>Uses power iteration method</li>
+                <li>Damping factor: 0.85 (follows links 85% of the time)</li>
+                <li>Runs for 20 iterations to converge</li>
+                <li>Normalizes scores to [0, 1] range</li>
+            </ul>
+
+            <h3>4. Ranking Algorithm</h3>
+            <p>
+                Combines content-based and link-based scores using the formula:
+            </p>
+            <div class="formula">
+                score(d, q) = w1 × cosine_similarity(d, q) + w2 × pagerank(d)
+            </div>
+            <p>
+                where <code>w1 + w2 = 1</code>. The default weights are:
+            </p>
+            <ul>
+                <li><code>w1 = 0.6</code> (content relevance weight)</li>
+                <li><code>w2 = 0.4</code> (page importance weight)</li>
+            </ul>
+
+            <h2>Technical Details</h2>
+
+            <h3>Vector Space Model</h3>
+            <p>
+                Documents and queries are represented as vectors in a high-dimensional term space.
+                The cosine similarity measures the angle between document and query vectors:
+            </p>
+            <ul>
+                <li>TF-IDF weighting scheme</li>
+                <li>Document length normalization</li>
+                <li>Cosine similarity for ranking</li>
+            </ul>
+
+            <h3>Text Processing</h3>
+            <ul>
+                <li>Tokenization using NLTK</li>
+                <li>Stopword removal (English)</li>
+                <li>Minimum term length: 2 characters</li>
+                <li>Case normalization</li>
+            </ul>
+
+            <h3>Implementation</h3>
+            <ul>
+                <li>Language: Python</li>
+                <li>Web Framework: Flask</li>
+                <li>HTML Parsing: BeautifulSoup</li>
+                <li>NLP: NLTK</li>
+                <li>Crawler: Custom implementation with robots.txt support</li>
+            </ul>
+
+            <h2>Features</h2>
+            <ul>
+                <li>Polite web crawling with robots.txt compliance</li>
+                <li>Efficient inverted index for fast retrieval</li>
+                <li>Combined content and link-based ranking</li>
+                <li>Clean web interface for query submission</li>
+                <li>Detailed scoring information (cosine + PageRank)</li>
+            </ul>
+
+            <h2>Dataset</h2>
+            <p>
+                The search engine indexes a minimum of 500 web pages. The current implementation
+                focuses on Wikipedia pages for demonstration purposes, but can be configured to
+                crawl any domain.
+            </p>
+        </div>
+
+        <div class="back-link">
+            <a href="/">← Back to Search</a>
+        </div>
+    </div>
+</body>
+</html>
