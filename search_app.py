@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from search_engine import SearchEngine
 import config
 
-app = Flask(__name__, template_folder=config.TEMPLATES_DIR)
+app = Flask(__name__, template_folder='.')
 
 # Initialize search engine
 search_engine = SearchEngine()
@@ -22,7 +22,7 @@ except Exception as e:
 @app.route('/')
 def index():
     """Render the search page."""
-    return render_template('search.html')
+    return render_template('index.html')
 
 
 @app.route('/search', methods=['GET'])

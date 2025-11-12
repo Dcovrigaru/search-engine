@@ -50,7 +50,6 @@ WEIGHT_PAGERANK = 0.4  # w2: weight for PageRank score
 # Storage paths
 CRAWLED_PAGES_DIR = 'crawled_pages'
 INDEX_DIR = 'index_data'
-TEMPLATES_DIR = 'templates'
 
 # Web interface settings
 FLASK_HOST = '0.0.0.0'
